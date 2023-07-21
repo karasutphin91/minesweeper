@@ -1,37 +1,43 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import Header from './header'
+import { StyledBoard } from './styles'
 import styled from 'styled-components'
+import jsonData from './boards.json'
+import Cell from './Cell'
 
 const StyledBody = styled.div`
-background-color: red;
+background-color: #9F86C0;
+border: 6px solid #231942;
+border-radius: 12px;
+height: 35rem;
+width: 30rem;
+padding: 1rem;
 `;
+
 function App() {
-  const [count, setCount] = useState(0)
+
+
+  const renderCells = () => {
+    const row = [];
+    for(let i = 0; i < 100; i++) {
+      row.push (
+        <Cell key={i} label={i} />
+      )
+    }
+    return row;
+  }
+
+    
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <StyledBody className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </StyledBody>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <StyledBody>
+        <Header />
+        <StyledBoard>
+          {renderCells()}
+        </StyledBoard>
+      </StyledBody> 
     </>
   )
 }

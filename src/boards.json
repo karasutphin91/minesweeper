@@ -1,0 +1,19 @@
+{
+  "boards": [
+    {
+      "id":1,
+      "name":"easy",
+      "numRows":10,
+      "numCols":10,
+      "numMines":10
+    },
+
+    {
+    "id":1,
+    "name":"medium",
+    "numRows":13,
+    "numCols":13,
+    "numMines":13
+    }
+  ]
+}

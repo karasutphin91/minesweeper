@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Cell from './Cell'
-import { useBoardInfo } from './App'
+import { BoardContext } from './BoardContext';
+import { useContext } from 'react'
 
 export const StyledBoard = styled.div`
   display: flex;
@@ -21,7 +22,8 @@ export const StyledLargeBoard = styled(StyledBoard)`
 `;
 
 export function Board() {
-  const { boardSize } = useBoardInfo();
+  const { boardSize } = useContext(BoardContext);
+
 
   const renderCells = () => {
     const row = [];

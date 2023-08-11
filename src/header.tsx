@@ -1,13 +1,13 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import './App.css'
 import { StyledHeader, StyledButton, StyledNumberDisplay } from './styles';
-import { useBoardInfo } from './App';
+import { BoardContext } from './BoardContext';
 
 const Header = () => {
   const [count, setCount] = useState(0);
   const [isTiming, setIsTiming] = useState(false);
   const [time, setTime] = useState(0);
-  const { boardSize, setBoardSize } = useBoardInfo();
+  const { boardSize, setBoardSize } = useContext(BoardContext);
 
     useEffect(() => { 
       let interval: number | undefined;
@@ -28,7 +28,7 @@ const Header = () => {
     } else if (boardSize === 'md') {  
       setBoardSize('lg');
     } else {
-      setBoardSize('lg');
+      setBoardSize('sm');
     }
     console.log(boardSize)
   }

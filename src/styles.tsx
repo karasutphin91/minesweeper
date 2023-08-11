@@ -32,13 +32,6 @@ export const StyledNumberDisplay = styled.div`
   border-radius: 6px;
 `;
 
-export const StyledBoard = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  width: 30rem;
-`;
-
 export const StyledRow = styled.div`
   display: flex;
   flex-direction: row;  

@@ -1,10 +1,8 @@
-import { useState } from 'react'
+import { useContext, useState, createContext } from 'react'
 import './App.css'
 import Header from './header'
-import { StyledBoard } from './styles'
 import styled from 'styled-components'
-import jsonData from './boards.json'
-import Cell from './Cell'
+import { Board } from './board'
 
 const StyledBody = styled.div`
 background-color: #9F86C0;
@@ -15,31 +13,28 @@ width: 30rem;
 padding: 1rem;
 `;
 
-function App() {
+export type BoardSize = 'sm' | 'md' | 'lg';
 
+interface BoardInfo {
+  boardSize: BoardSize;
+  setBoardSize: (newBoardSize: BoardSize) => void,
+}
 
-  const renderCells = () => {
-    const row = [];
-    for(let i = 0; i < 100; i++) {
-      row.push (
-        <Cell key={i} label={i} />
-      )
-    }
-    return row;
-  }
+export const BoardContext = createContext<BoardInfo>({
+  boardSize: 'sm',
+  setBoardSize: (boardSize: string) => {console.log('default', boardSize)},
+});
 
-    
+export default function App() {
 
   return (
     <>
       <StyledBody>
         <Header />
-        <StyledBoard>
-          {renderCells()}
-        </StyledBoard>
+        <Board/>
       </StyledBody> 
     </>
   )
 }
 
-export default App
+export const useBoardInfo = () => useContext(BoardContext);

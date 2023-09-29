@@ -9,6 +9,12 @@ const Header = () => {
   const [time, setTime] = useState(0);
   const { boardSize, setBoardSize } = useContext(BoardContext);
 
+  const resetGame = () => {
+    setIsTiming(false);
+    setCount(0);
+    setTime(0);
+  }
+
     useEffect(() => { 
       let interval: number | undefined;
   
@@ -25,31 +31,33 @@ const Header = () => {
   function boardSizeChange() {
     if (boardSize === 'sm') {
       setBoardSize('md');
+      resetGame();
     } else if (boardSize === 'md') {  
       setBoardSize('lg');
+      resetGame();
     } else {
       setBoardSize('sm');
+      resetGame();
     }
     console.log(boardSize)
   }
   
-  function increment() {
-    setCount(count + 1);
-
+  function timeUp() {
     if(!isTiming) {
       setIsTiming(true);
     }
   }
+  const { score } = useContext(BoardContext);
   
   
   return (
     <StyledHeader>
       <StyledNumberDisplay>
-        {count}
+        {score}
       </StyledNumberDisplay>
       <StyledButton onClick={boardSizeChange}>Size</StyledButton>
       <StyledButton
-      onClick={increment}>:D</StyledButton>
+      onClick={timeUp}>:D</StyledButton>
       <StyledNumberDisplay>
         {time}
       </StyledNumberDisplay>

@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { useContext, useState } from "react";
+import { BoardContext } from "./BoardContext";
 
 export const StyledCell = styled.div`
   min-width: 3rem;
@@ -19,16 +21,23 @@ function clickMe(label: number) {
 
 interface Props {
   label: number;
+  isMine?: boolean;
+  isClicked?: boolean;
 }
 
 const Cell = ({label}: Props) => {
+  const { incrementScore } = useContext(BoardContext);
+  const [isMine, setIsMine] = useState(false);
 
   return (
-    <StyledCell className="initial" onClick={() => clickMe(label)}>
+    <StyledCell className="initial" onClick={() => {
+      clickMe(label)
+      incrementScore(1)
+      }}>
       {label}
     </StyledCell>
   )
 }
 
 
-export default Cell
+export default Cell;

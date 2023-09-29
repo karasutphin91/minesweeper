@@ -25,9 +25,9 @@ export function Board() {
   const { boardSize } = useContext(BoardContext);
 
 
-  const renderCells = () => {
+  const renderCells = (numCells: number, numMines: number) => {
     const row = [];
-    for(let i = 0; i < 100; i++) {
+    for(let i = 0; i < numCells; i++) {
       row.push (
         <Cell key={i} label={i} />
       )
@@ -39,19 +39,19 @@ export function Board() {
     if (boardSize === 'sm') {
       return (
         <StyledSmallBoard>
-          {renderCells()}
+          {renderCells(100, 5)}
         </StyledSmallBoard>
       )
     } else if (boardSize === 'md') {
       return (
         <StyledMedBoard>
-          {renderCells()}
+          {renderCells(121, 10)}
         </StyledMedBoard>
       )
     } else {
       return (
         <StyledLargeBoard>
-          {renderCells()}
+          {renderCells(156, 15)}
         </StyledLargeBoard>
       )
     }

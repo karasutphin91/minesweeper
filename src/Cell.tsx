@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { BoardContext } from "./BoardContext";
 
 export const StyledCell = styled.div`
@@ -9,25 +9,39 @@ export const StyledCell = styled.div`
   &.initial {
     background-color: pink;
   }
-  &.clicked {
+  &.revealed {
     background-color: purple;
+  }
+  &.mine {
+    background-color: blue;
   }
 
 `;
-function clickMe(label: number) {
-  const e = document.getElementsByClassName("initial");
-  e[label].classList.add("clicked");
-}
 
 interface Props {
   label: number;
   isMine?: boolean;
-  isClicked?: boolean;
+  isRevealed?: boolean;
+  isFlagged?: boolean;
+  isHidden?: boolean;
 }
 
 const Cell = ({label}: Props) => {
   const { incrementScore } = useContext(BoardContext);
   const [isMine, setIsMine] = useState(false);
+  const [isRevealed, setIsRevealed] = useState(false);
+  const [isFlagged, setIsFlagged] = useState(false);
+  const [isHidden, setIsHidden] = useState(false);
+
+  function clickMe(label: number) {
+    const e = document.getElementsByClassName("initial");
+    e[label].classList.add("revealed");
+    setIsRevealed(true);
+    if (isMine) {
+      e[label].classList.add("mine");
+    }
+  }
+
 
   return (
     <StyledCell className="initial" onClick={() => {

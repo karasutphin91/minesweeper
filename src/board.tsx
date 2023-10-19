@@ -2,11 +2,13 @@ import styled from "styled-components";
 import Cell from './Cell'
 import { BoardContext } from './BoardContext';
 import { useContext } from 'react'
+import { JSX } from "react/jsx-runtime";
 
 export const StyledBoard = styled.div`
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
+  justify-content: center;
   /* TODO - add these as classnames instead */
 `;
 
@@ -24,7 +26,7 @@ export const StyledLargeBoard = styled(StyledBoard)`
 
 export function Board() {
   const { boardSize } = useContext(BoardContext);
-  const row = [];
+  const row: JSX.Element[] = [];
 
   const renderCells = (numCells: number, minesNeeded: number) => {
     for(let i = 0; i < numCells; i++) {
@@ -32,33 +34,27 @@ export function Board() {
         <Cell
           key={i}
           label={i}
-          isHidden={true}
-          isMine={false}
-          isFlagged={false}
-          isRevealed={false}
+          mine={false}
           />
       )
+    }
+    for (let minesPlaced = 0; minesPlaced < minesNeeded; minesPlaced++) {
+      const randomCell = Math.floor(Math.random() * row.length);
+      const newobj = Object.assign({}, row[randomCell]);
+        newobj.mine = true;
+        console.log('placed mine');
     }
     return row;
   }
 
-  // function placeMines(row: [], minesNeeded: number) {
-  //   let minesPlaced = 0;
-  //   while (minesPlaced < minesNeeded) {
-  //     const randomCell = Math.floor(Math.random() * row.length);
-  //     if(randomCell.isMine === false) {
-  //       randomCell.isMine = true;
-  //       minesPlaced++;
-  //       console.log('placed mine');
-  //     }
-  //   }
-  // }
-
+// global variable for cells number per board size
+// make sure it doesn't rerender the board when clicking regularly
   function renderBoard() {
     if (boardSize === 'sm') {
       return (
         <StyledSmallBoard>
-          {renderCells(100, 50)}
+          {
+          renderCells(100, 50)}
         </StyledSmallBoard>
       )
     } else if (boardSize === 'md') {

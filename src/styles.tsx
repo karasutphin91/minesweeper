@@ -7,7 +7,8 @@ export const StyledHeader = styled.div`
   padding: 1rem;
   background-color: #E0B1CB;
   border: 4px solid #5E548E;
-  margin: auto;
+  margin: 1rem;
+  width: 100%;
   height: 4rem;
   border-radius: 6px;
 `;

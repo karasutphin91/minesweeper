@@ -15,23 +15,22 @@ export const StyledCell = styled.div`
   &.mine {
     background-color: blue;
   }
-
 `;
 
 interface Props {
   label: number;
-  isMine?: boolean;
-  isRevealed?: boolean;
-  isFlagged?: boolean;
-  isHidden?: boolean;
+  mine: boolean;
 }
 
-const Cell = ({label}: Props) => {
+const Cell = ({label, mine}: Props) => {
   const { incrementScore } = useContext(BoardContext);
-  const [isMine, setIsMine] = useState(false);
+  const [isMine, setIsMine] = useState(mine);
   const [isRevealed, setIsRevealed] = useState(false);
   const [isFlagged, setIsFlagged] = useState(false);
-  const [isHidden, setIsHidden] = useState(false);
+  
+  useEffect(() => {
+    setIsMine(mine);
+  }, [mine]);
 
   function clickMe(label: number) {
     const e = document.getElementsByClassName("initial");
@@ -41,6 +40,8 @@ const Cell = ({label}: Props) => {
       e[label].classList.add("mine");
     }
   }
+
+
 
 
   return (

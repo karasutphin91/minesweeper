@@ -25,25 +25,16 @@ const StyledButton = styled.button`
 `;
 
 const App = () => {
-  const { boardSize, setBoardSize } = useContext(BoardContext);
+  const { boardType, setBoardType } = useContext(BoardContext);
   const [gameState, setGameState] = useState('playing');
-
-  const changeSize = (size) => {
-    if (size !== boardSize) {
-      setBoardSize(size);
-      console.log(size);
-    } else {
-      console.log('same size');
-    }
-  }
 
   return (
     <>
       <StyledBody>
         <div>
-          <StyledButton onClick={() => changeSize('sm')}>SM</StyledButton>
-          <StyledButton onClick={() => changeSize('md')}>MED</StyledButton>
-          <StyledButton onClick={() => changeSize('lg')}>LG</StyledButton>
+          <StyledButton onClick={() => setBoardType('easy')}>Easy</StyledButton>
+          <StyledButton onClick={() => setBoardType('medium')}>Medium</StyledButton>
+          <StyledButton onClick={() => setBoardType('hard')}>Hard</StyledButton>
         </div>
         <Header />
         <Board/>

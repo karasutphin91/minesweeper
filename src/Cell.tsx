@@ -9,11 +9,11 @@ export const StyledCell = styled.div`
   &.hidden {
     background-color: pink;
   }
-  &.revealed {
-    background-color: purple;
+  &.isMine {
+    background-color: red;
   }
-  &.mine {
-    background-color: blue;
+  &.revealed {
+    background-color: yellow;
   }
   &.flagged {
     background-color: red;
@@ -27,8 +27,13 @@ interface Props {
 
 const Cell = ({cell, label}: Props) => {
   const { incrementScore } = useContext(BoardContext);
+  const { isTiming, setIsTiming } = useContext(BoardContext);
 
   const classNamed = useMemo(() => {
+    switch (cell.isMine) {
+      case true:
+        return 'isMine';
+    }
     switch (cell.status) {
       case 'hidden':
         return 'hidden';
@@ -37,14 +42,19 @@ const Cell = ({cell, label}: Props) => {
       case 'flagged':
         return 'flagged';
     }
-  }, [cell.status]);
+
+  }, [cell.isMine, cell.status]);
 
   return (
     <StyledCell className={classNamed} onClick={() => {
-      // clickMe(label)
+      if (!isTiming) {
+        setIsTiming(true);
+      }
       incrementScore(1)
       }}>
-      {label}
+      {
+        cell.isMine ? 'X' : ''
+      }
     </StyledCell>
   )
 }

@@ -2,7 +2,6 @@ import styled from "styled-components";
 import Cell from './Cell'
 import { BoardContext } from './BoardContext';
 import { useContext, useMemo } from 'react'
-import { JSX } from "react/jsx-runtime";
 
 export const StyledBoard = styled.div`
   display: flex;
@@ -49,7 +48,6 @@ export function Board() {
       )
     )
   }
-
 
   return (
     <BoardStyle>

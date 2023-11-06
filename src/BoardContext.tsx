@@ -1,7 +1,18 @@
-import { useState, createContext, useCallback, useEffect } from "react";
+import { ReactNode, useState, createContext, useCallback, useEffect, SetStateAction } from "react";
 import { BoardType } from "./types"
 
-const BoardContext = createContext();
+interface BoardContext {
+  boardCells: BoardCell[];
+  boardType: BoardType;
+  setBoardType: (value: SetStateAction<BoardType>) => void;
+  score: number;
+  incrementScore: (value: SetStateAction<number>) => void;
+  resetGame: () => void;
+  time: number;
+  isTiming: boolean;
+  setIsTiming: (value: SetStateAction<boolean>) => void;
+}
+const BoardContext = createContext({} as BoardContext);
 const DIFFICULTY_MAP = {'easy': [81, 10], 'medium': [121, 15], 'hard': [156, 20]}
 
 export type BoardCell = {
@@ -13,7 +24,7 @@ export type BoardCell = {
 
 // export type BoardType = 'easy' | 'medium' | 'hard';
 
-const generateBoard = (numCells: number) => {
+const generateBoard = (numCells: number, numMines: number) => {
   const arrayBc: BoardCell[] = [];
   for(let i = 0; i < numCells; i++) {
     arrayBc.push (
@@ -24,7 +35,7 @@ const generateBoard = (numCells: number) => {
       }
     )
   }
-  for (let minesPlaced = 0; minesPlaced < 11; minesPlaced++) {
+  for (let minesPlaced = 0; minesPlaced < numMines; minesPlaced++) {
     const randomCell = Math.floor(Math.random() * arrayBc.length);
     console.log('rando', randomCell);
     arrayBc[randomCell].isMine = true;
@@ -32,8 +43,11 @@ const generateBoard = (numCells: number) => {
   return arrayBc;
 }
 
+interface BoardProviderProps {
+  children: ReactNode;
+}
 
-const BoardProvider = ({ children }) => {
+const BoardProvider = ({ children }: BoardProviderProps) => {
   const [boardType, setBoardType] = useState<BoardType>('easy');
   const [score, setScore] = useState(0);
   const [isTiming, setIsTiming] = useState(false);

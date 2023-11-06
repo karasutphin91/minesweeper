@@ -1,5 +1,5 @@
 import { useState, createContext, useCallback, useEffect } from "react";
-import { BoardType } from "../types";
+import { BoardType } from "./types"
 
 const BoardContext = createContext();
 const DIFFICULTY_MAP = {'easy': [81, 10], 'medium': [121, 15], 'hard': [156, 20]}

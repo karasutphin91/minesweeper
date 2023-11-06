@@ -2,8 +2,8 @@ import './App.css'
 import Header from './header'
 import styled from 'styled-components'
 import { Board } from './board'
-import { useState, useContext } from 'react'
-import { BoardContext } from './BoardContext';
+// import { useState, useContext } from 'react'
+// import { BoardContext } from './BoardContext';
 
 
 const StyledBody = styled.div`
@@ -25,8 +25,8 @@ const StyledButton = styled.button`
 `;
 
 const App = () => {
-  const { boardType, setBoardType } = useContext(BoardContext);
-  const [gameState, setGameState] = useState('playing');
+  // const { boardType, setBoardType } = useContext(BoardContext);
+  // const [gameState, setGameState] = useState('playing');
 
   return (
     <>

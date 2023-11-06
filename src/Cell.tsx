@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { useContext, useEffect, useMemo, useState } from "react";
-import { BoardContext } from "./BoardContext";
+import { useContext, useMemo } from "react";
+import { BoardCell, BoardContext } from "./BoardContext";
 
 export const StyledCell = styled.div`
   min-width: 3rem;
@@ -25,7 +25,7 @@ interface Props {
   label: number;
 }
 
-const Cell = ({cell, label}: Props) => {
+const Cell = ({cell}: Props) => {
   const { incrementScore } = useContext(BoardContext);
   const { isTiming, setIsTiming } = useContext(BoardContext);
 

@@ -9,9 +9,6 @@ export const StyledCell = styled.div`
   &.hidden {
     background-color: pink;
   }
-  &.isMine {
-    background-color: red;
-  }
   &.revealed {
     background-color: yellow;
   }
@@ -27,7 +24,23 @@ interface Props {
 
 const Cell = ({cell}: Props) => {
   const { incrementScore } = useContext(BoardContext);
-  const { isTiming, setIsTiming } = useContext(BoardContext);
+  const { isGameOn, setIsGameOn } = useContext(BoardContext);
+
+  const onClickCell = () => {
+    if (!isGameOn) {
+      setIsGameOn(true);
+      cell.status = 'revealed';
+    } else {
+      cell.status = 'revealed';
+    }
+    if (cell.isMine) {
+      setIsGameOn(false);
+      console.log('game over');
+    }
+    
+  }
+
+
 
   const classNamed = useMemo(() => {
     switch (cell.isMine) {
@@ -46,15 +59,8 @@ const Cell = ({cell}: Props) => {
   }, [cell.isMine, cell.status]);
 
   return (
-    <StyledCell className={classNamed} onClick={() => {
-      if (!isTiming) {
-        setIsTiming(true);
-      }
-      incrementScore(1)
-      }}>
-      {
-        cell.isMine ? 'X' : ''
-      }
+    <StyledCell className={classNamed} onClick={onClickCell}>
+      {cell.isMine ? 'X' : ''}
     </StyledCell>
   )
 }

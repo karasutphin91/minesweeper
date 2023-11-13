@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from 'react'
+import { useContext } from 'react'
 import './App.css'
 import { StyledHeader, StyledButton, StyledNumberDisplay } from './styles';
 import { BoardContext } from './BoardContext';

@@ -11,6 +11,8 @@ interface BoardContext {
   time: number;
   isTiming: boolean;
   setIsTiming: (value: SetStateAction<boolean>) => void;
+  isGameOn: boolean;
+  setIsGameOn: (value: SetStateAction<boolean>) => void;
 }
 const BoardContext = createContext({} as BoardContext);
 const DIFFICULTY_MAP = {'easy': [81, 10], 'medium': [121, 15], 'hard': [156, 20]}
@@ -30,7 +32,7 @@ const generateBoard = (numCells: number, numMines: number) => {
     arrayBc.push (
       {
         isMine: false,
-        status: 'revealed',
+        status: 'hidden',
         neighbors: 0,
       }
     )
@@ -56,26 +58,37 @@ const BoardProvider = ({ children }: BoardProviderProps) => {
     prev => prev + inc
   )}, []);
   const [boardCells, setBoardCells] = useState<BoardCell[]>([]);
+  const [isGameOn, setIsGameOn] = useState(false);
+  const [timer, setTimer] = useState(null);
 
-  useEffect(() => { 
-    let interval: number | undefined;
-    if (isTiming) {
-      interval = window.setInterval(() => {
-        setTime((prevTime) => prevTime + 1);
-      }, 1000);
+  useEffect(() => {
+    console.log('Component mounted');
+    const intervalId = setInterval(() => {
+      setTime((prevTime) => prevTime + 1);
+    }, 1000); // Interval is set to 1000 milliseconds (1 second)
+    setTimer(intervalId);
+
+    return () => {
+      console.log('Component unmounted');
+      clearInterval(intervalId);
+    };
+  }, []); 
+
+  useEffect(() => {
+    if (isGameOn) {
+      setIsTiming(true);
     } else {
-      window.clearInterval(interval);
-    }
-  }, [isTiming]);
+      console.log('Stopping timer');
+      clearInterval(timer);
+      setIsTiming(false);
+    } 
+  }, [isGameOn]);
+
+
 
   // function getCellsForDifficulty() {
   // }
 
-  // function timeUp() {
-  //   if(!isTiming) {
-  //     setIsTiming(true);
-  //   }
-  // }
 
   useEffect(() => {
     switch (boardType) {
@@ -102,12 +115,14 @@ const BoardProvider = ({ children }: BoardProviderProps) => {
     // every time player does move, increment something by 1, move count
     // if move count is gets set to 0, then regenerate board
     setIsTiming(false);
+    setIsGameOn(false);
+    console.log('resetting game');
   }
 
 
   // states will go here that are shared through app
   return (
-    <BoardContext.Provider value={{ boardCells, boardType, setBoardType, score, incrementScore, resetGame, time, isTiming, setIsTiming }}>
+    <BoardContext.Provider value={{ boardCells, boardType, setBoardType, score, incrementScore, resetGame, time, isTiming, setIsTiming, isGameOn, setIsGameOn }}>
       {children}
     </BoardContext.Provider>
   );

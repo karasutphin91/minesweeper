@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Cell from './Cell'
-import { BoardContext } from './BoardContext';
+import { BoardCell, BoardContext } from './BoardContext';
 import { useContext, useMemo } from 'react'
 
 export const StyledBoard = styled.div`
@@ -38,7 +38,7 @@ export function Board() {
   }
   , [boardType]);
 
-  const renderCells = (boardCells: BoardCell) => {
+  const renderCells = (boardCells: BoardCell[]) => {
     return boardCells.map((cell, i) => (
       <Cell
         key={i}
